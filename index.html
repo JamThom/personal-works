@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JamThom</title>
+  <meta name=viewport content="width=device-width,initial-scale=1">
+  <style>
+  p {
+    font-family: monostena, monospace;
+    white-space: pre-wrap;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    margin: 0;
+  }
+  </style>
+</head>
+<body>
+  <script>
+
+    (function() {
+
+      const texts = {
+        hi: {
+          tag: 'p',
+          text: 'Hello World.'
+        },
+        myNameIs: {
+          tag: 'p',
+          text: 'My name is James Thomson.'
+        },
+        what: {
+          tag: 'p',
+          text: 'This is my personal creative site.'
+        },
+        info: {
+          tag: 'p',
+          text: 'It is still under development.'
+        },
+        computer: {
+          tag: 'p',
+          text: '.--.\n|__| .-------.\n|=.| |.-----.|\n|--| || BRB ||\n|  | |\'-----\'|\n|__|~\')_____(\''
+        }
+      };
+
+      class TextElement {
+
+        constructor({ tag, attributes, text }) {
+          this.element = document.createElement(tag);
+          document.body.append(this.element)
+          this.setElementAttributes(attributes);
+          this.text = text;
+          this.animationFrame = 0;
+        }
+
+        setElementAttributes(attributes) {
+          for (let attribute in attributes) {
+            this.element.setAttribute(attribute,attributes[attribute]);
+          }
+        }
+
+        updateText() {
+          this.element.innerText = this.text.substring(0,this.animationFrame);
+        }
+        
+        incrementAnimationFrame(next) {
+          this.animationFrame++;
+          this.updateText();
+        }
+        
+        deccrementAnimationFrame(next) {
+          this.animationFrame--;
+          this.updateText();
+        }
+
+        generateAnimation(limit, callback, done) {
+          const animation = () => {
+            if (this.animationFrame === limit) return done();
+            callback.bind(this)();
+            requestAnimationFrame(animation);
+          }
+          animation()
+        }
+
+        animateInResolve(resolve) {
+          this.generateAnimation(this.text.length,this.incrementAnimationFrame,resolve);
+        }
+
+        animateOutResolve(resolve) {
+          this.generateAnimation(0,this.deccrementAnimationFrame,resolve);
+        }
+
+        animateIn() {
+          return new Promise(this.animateInResolve.bind(this))
+        }
+
+        animateOut() {
+          return new Promise(this.animateOutResolve.bind(this))
+        }
+
+      }
+
+      class Animation {
+
+        constructor(texts) {
+          this.texts = {};
+          for (let key in texts) {
+            this.texts[key] = new TextElement(texts[key]);
+          }
+          this.beginAnimation();
+        }
+
+        async animateText(i) {
+          if (i === this.textElements.length) return
+          await this.textElements[i].animateIn();
+          this.animateText(i+1);
+        }
+
+        animateTexts() {
+          this.animateText(0);
+        }
+
+        delay(ms) {
+          return new Promise((resolve) => {
+            setTimeout(resolve,ms)
+          })
+        }
+
+        async beginAnimation() {
+          await this.texts.hi.animateIn();
+          await this.delay(1000);
+          await this.texts.hi.animateOut();
+          await this.texts.myNameIs.animateIn();
+          await this.delay(1000);
+          await this.texts.myNameIs.animateOut();
+          await this.texts.what.animateIn();
+          await this.delay(1000);
+          await this.texts.what.animateOut();
+          await this.texts.info.animateIn();
+          await this.delay(1000);
+          await this.texts.info.animateOut();
+          await this.texts.computer.animateIn();
+        }
+
+      }
+
+      new Animation(texts);
+
+    })();
+
+  </script>
+</body>
+</html>
