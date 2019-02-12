@@ -5,13 +5,15 @@
   <title>JamThom</title>
   <meta name=viewport content="width=device-width,initial-scale=1">
   <style>
-  p {
+  body {
     font-family: monostena, monospace;
+  }
+  p {
     white-space: pre-wrap;
-    position: fixed;
-    top: 1rem;
-    left: 1rem;
     margin: 0;
+  }
+  a {
+    display: block;
   }
   </style>
 </head>
@@ -35,11 +37,31 @@
         },
         info: {
           tag: 'p',
-          text: 'It is still under development.'
+          text: 'Works:'
         },
-        computer: {
-          tag: 'p',
-          text: '.--.\n|__| .-------.\n|=.| |.-----.|\n|--| || BRB ||\n|  | |\'-----\'|\n|__|~\')_____(\''
+        drumMachine: {
+          tag: 'a',
+          attributes: {
+            href: 'https://html5drummachine.com',
+            target: 'blank'
+          },
+          text: 'HTML5 Drum Machine (2014)'
+        },
+        electronium: {
+          tag: 'a',
+          attributes: {
+            href: 'http://electronium.jamthom.io',
+            target: 'blank'
+          },
+          text: 'Electronium (2016)'
+        },
+        dreamPipe: {
+          tag: 'a',
+          attributes: {
+            href: '#',
+            target: 'blank'
+          },
+          text: 'dreamPipe (coming soon)'
         }
       };
 
@@ -62,12 +84,12 @@
         updateText() {
           this.element.innerText = this.text.substring(0,this.animationFrame);
         }
-        
+
         incrementAnimationFrame(next) {
           this.animationFrame++;
           this.updateText();
         }
-        
+
         deccrementAnimationFrame(next) {
           this.animationFrame--;
           this.updateText();
@@ -137,9 +159,9 @@
           await this.delay(1000);
           await this.texts.what.animateOut();
           await this.texts.info.animateIn();
-          await this.delay(1000);
-          await this.texts.info.animateOut();
-          await this.texts.computer.animateIn();
+          await this.texts.drumMachine.animateIn();
+          await this.texts.electronium.animateIn();
+          await this.texts.dreamPipe.animateIn();
         }
 
       }
