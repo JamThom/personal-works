@@ -10,7 +10,7 @@
   }
   p {
     white-space: pre-wrap;
-    margin: 0;
+    margin: 10px 0 0;
   }
   a {
     display: block;
@@ -58,10 +58,22 @@
         dreamPipe: {
           tag: 'a',
           attributes: {
-            href: '#',
+            href: 'https://dreampipe.fun',
             target: 'blank'
           },
-          text: 'dreamPipe (coming soon)'
+          text: 'dreamPipe (2019)'
+        },
+        contact: {
+          tag: 'p',
+          text: 'Get in touch:'
+        },
+        email: {
+          tag: 'a',
+          attributes: {
+            href: 'mailto:hello@jamthom.io',
+            target: 'blank'
+          },
+          text: 'hello@jamthom.io'
         }
       };
 
@@ -150,18 +162,14 @@
 
         async beginAnimation() {
           await this.texts.hi.animateIn();
-          await this.delay(1000);
-          await this.texts.hi.animateOut();
           await this.texts.myNameIs.animateIn();
-          await this.delay(1000);
-          await this.texts.myNameIs.animateOut();
           await this.texts.what.animateIn();
-          await this.delay(1000);
-          await this.texts.what.animateOut();
           await this.texts.info.animateIn();
           await this.texts.drumMachine.animateIn();
           await this.texts.electronium.animateIn();
           await this.texts.dreamPipe.animateIn();
+          await this.texts.contact.animateIn();
+          await this.texts.email.animateIn();
         }
 
       }
