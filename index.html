@@ -1,183 +1,54 @@
-<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>JamThom</title>
-  <meta name=viewport content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
-  body {
-    font-family: monostena, monospace;
-  }
-  p {
-    white-space: pre-wrap;
-    margin: 10px 0 0;
-  }
-  a {
-    display: block;
-  }
+    body {
+      margin: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+    }
+
+    h1 {
+      font-weight: bold;
+      font-size: 2em;
+    }
+
+    h2 {
+      font-size: 1.5em;
+      font-weight: bold;
+      margin-bottom: 0.4em;
+      margin-top: 1em;
+    }
   </style>
 </head>
+
 <body>
+  <h1>Hello World.</h1>
+  <p>My name is James Thomson.</p>
+  <p>This is my personal creative site, which lists personal projects I've worked on.</p>
+  <h2>Projects</h2>
+  <ul>
+    <li>
+      <a href="https://html5drummachine.fun" target="blank">HTML5 Drum Machine (2014)</a>
+    </li>
+    <li>
+      <a href="http://electronium.jamthom.io" target="blank">Electronium (2016)</a>
+    </li>
+    <li>
+      <a href="https://dreampipe.fun" target="blank">DreamPipe (2019)</a>
+    </li>
+    <li>
+      <a href="https://github.com/JamThom/diary" target="blank">Diary (2019)</a>
+    </li>
+  </ul>
+  <h2>Get in touch</h2>
+  <a id="email" href="" target="blank"></a>
   <script>
-
-    (function() {
-
-      const texts = {
-        hi: {
-          tag: 'p',
-          text: 'Hello World.'
-        },
-        myNameIs: {
-          tag: 'p',
-          text: 'My name is James Thomson.'
-        },
-        what: {
-          tag: 'p',
-          text: 'This is my personal creative site.'
-        },
-        info: {
-          tag: 'p',
-          text: 'Works:'
-        },
-        drumMachine: {
-          tag: 'a',
-          attributes: {
-            href: 'https://html5drummachine.com',
-            target: 'blank'
-          },
-          text: 'HTML5 Drum Machine (2014)'
-        },
-        electronium: {
-          tag: 'a',
-          attributes: {
-            href: 'http://electronium.jamthom.io',
-            target: 'blank'
-          },
-          text: 'Electronium (2016)'
-        },
-        dreamPipe: {
-          tag: 'a',
-          attributes: {
-            href: 'https://dreampipe.fun',
-            target: 'blank'
-          },
-          text: 'dreamPipe (2019)'
-        },
-        contact: {
-          tag: 'p',
-          text: 'Get in touch:'
-        },
-        email: {
-          tag: 'a',
-          attributes: {
-            href: 'mailto:hello@jamthom.io',
-            target: 'blank'
-          },
-          text: 'hello@jamthom.io'
-        }
-      };
-
-      class TextElement {
-
-        constructor({ tag, attributes, text }) {
-          this.element = document.createElement(tag);
-          document.body.append(this.element)
-          this.setElementAttributes(attributes);
-          this.text = text;
-          this.animationFrame = 0;
-        }
-
-        setElementAttributes(attributes) {
-          for (let attribute in attributes) {
-            this.element.setAttribute(attribute,attributes[attribute]);
-          }
-        }
-
-        updateText() {
-          this.element.innerText = this.text.substring(0,this.animationFrame);
-        }
-
-        incrementAnimationFrame(next) {
-          this.animationFrame++;
-          this.updateText();
-        }
-
-        deccrementAnimationFrame(next) {
-          this.animationFrame--;
-          this.updateText();
-        }
-
-        generateAnimation(limit, callback, done) {
-          const animation = () => {
-            if (this.animationFrame === limit) return done();
-            callback.bind(this)();
-            requestAnimationFrame(animation);
-          }
-          animation()
-        }
-
-        animateInResolve(resolve) {
-          this.generateAnimation(this.text.length,this.incrementAnimationFrame,resolve);
-        }
-
-        animateOutResolve(resolve) {
-          this.generateAnimation(0,this.deccrementAnimationFrame,resolve);
-        }
-
-        animateIn() {
-          return new Promise(this.animateInResolve.bind(this))
-        }
-
-        animateOut() {
-          return new Promise(this.animateOutResolve.bind(this))
-        }
-
-      }
-
-      class Animation {
-
-        constructor(texts) {
-          this.texts = {};
-          for (let key in texts) {
-            this.texts[key] = new TextElement(texts[key]);
-          }
-          this.beginAnimation();
-        }
-
-        async animateText(i) {
-          if (i === this.textElements.length) return
-          await this.textElements[i].animateIn();
-          this.animateText(i+1);
-        }
-
-        animateTexts() {
-          this.animateText(0);
-        }
-
-        delay(ms) {
-          return new Promise((resolve) => {
-            setTimeout(resolve,ms)
-          })
-        }
-
-        async beginAnimation() {
-          await this.texts.hi.animateIn();
-          await this.texts.myNameIs.animateIn();
-          await this.texts.what.animateIn();
-          await this.texts.info.animateIn();
-          await this.texts.drumMachine.animateIn();
-          await this.texts.electronium.animateIn();
-          await this.texts.dreamPipe.animateIn();
-          await this.texts.contact.animateIn();
-          await this.texts.email.animateIn();
-        }
-
-      }
-
-      new Animation(texts);
-
-    })();
-
+    const emailLink = document.querySelector('#email');
+    emailLink.innerText = 'jamthomweb@gmail.com';
+    emailLink.setAttribute('href', 'mailto:jamthomweb@gmail.com')
   </script>
 </body>
 </html>
